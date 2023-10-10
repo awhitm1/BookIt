@@ -1,25 +1,37 @@
-import { Directive, HostBinding, HostListener } from "@angular/core";
-
+import {
+  Directive,
+  HostListener,
+  HostBinding,
+  ElementRef,
+  Renderer2
+} from "@angular/core";
 
 @Directive({
-  selector: '[appDropdown]'
+  selector: "[appDropdown]"
 })
-
 export class DropdownDirective {
-  constructor(private elementRef: ElementRef, private renderer: Renderer2){
-    @HostBinding('class.show') isOpen = false
+  // Inject packages
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
-    @HostListener('click') toggleOpen() {
-      this.isOpen = !this.isOpen
+  // When "isOpen" switches to true this will be added and when it's false, it will be removed
+  @HostBinding("class.show") isOpen = false;
 
-      //Element to add class
-      let dropdownList = this.elementRef.nativeElement.querySelector('.dropdown-menu');
+  // Click Listener to toggle.
+  @HostListener("click") toggleOpen() {
+    // Change our "isOpen" variable to the opposite of what it currently is.
+    this.isOpen = !this.isOpen;
 
-      if (this.isOpen){
-        this.renderer.addClass(dropdownList, 'show')
-      } else {
-        this.renderer.removeClass(dropdownList, 'show')
-      }
+    // Grab the dropdown-menu div
+    let dropdownList = this.elementRef.nativeElement.querySelector(
+      ".dropdown-menu"
+    );
+
+    if (this.isOpen) {
+      // If "isOpen" is true => ADD the class "show" to our dropdownList
+      this.renderer.addClass(dropdownList, "show");
+    } else {
+      // If "isOpen" is false => REMOVE the class "show" from our dropdownList
+      this.renderer.removeClass(dropdownList, "show");
     }
   }
 }
