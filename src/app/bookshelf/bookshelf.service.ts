@@ -53,6 +53,10 @@ export class BookshelfService {
     }
   }
 
+  getBook(idx: number){
+    return this.myBooks.slice()[idx]
+  }
+
 }
 
 
